@@ -56,22 +56,6 @@ def map_view(request):
     return render(request, 'mapapp/map.html', {'markers': serialized_markers})
 
 
-# @login_required(login_url="/users/login/")
-# def marker(request):
-#     if request.method == 'POST':
-#         form = AddMarker(request.POST, request.FILES)
-#         if form.is_valid():
-#             newpost = form.save(commit=False)
-#             newpost.author = request.user
-#             newpost.save()
-#             return redirect('historic:map')
-#         else:
-#             print(form.errors)  # Debugging: Print form validation errors
-#     else:
-#         form = AddMarker()
-#     return render(request, 'mapapp/new-marker.html', {'form': form})
-
-
 @login_required(login_url="/users/login/")
 def marker(request):
     if request.method == 'POST':
