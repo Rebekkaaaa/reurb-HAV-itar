@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Replace your door
+{% endblock %}
+
+{% block content %}
+<div class="studies_section layout_padding">
+    <div class="container">
+       <div class="row">
+          <div class="col-md-4">
+            <h1 class="about_taital">Replace your door</h1>
+            <div class="about_text">
+                 <p>Do you want to replace it in its current size and position or do you want to have a look how it might have looked historically?</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+             <div class="about_text_main">
+                <div class="tomap_bt active"><a href="/replace_current">Keep the current size</a></div>
+             </div>
+         </div>
+          <div class="col-md-4">
+             <div class="about_text_main">
+                <div class="started_bt"><a href="/replace_historic">Find historic views</a></div>
+             </div>
+          </div>
+       </div>
+    </div>
+ </div>
+{% endblock %}

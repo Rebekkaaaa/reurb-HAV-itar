@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Replace your current door
+{% endblock %}
+
+{% block content %}
+        <div class="studies_section layout_padding">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-4">
+                    <h1 class="about_taital">Keep the position</h1>
+                    <div class="about_text">
+                         <p>You have decided to replace your door in the same size and position. To find a fitting replacement we need some more information about your current door.</p>
+                         <p>Is your doorframe still useable or does in need to be replaced as well?</p>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                     <div class="about_text_main">
+                        <div class="tomap_bt active"><a href="{% url 'current:keep_frame' %}">My frame is still good</a></div>
+                     </div>
+                 </div>
+                  <div class="col-md-4">
+                     <div class="about_text_main">
+                        <div class="started_bt"><a href="{% url 'current:new_frame' %}">I need a new frame</a></div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+    {% endblock %}

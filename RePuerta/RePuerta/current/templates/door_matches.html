@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+
+<!DOCTYPE html>
+{% load static %}
+{% block title %}
+    Door Matches
+{% endblock %}
+
+{% block content %}
+
+<div class="studies_section layout_padding">
+   <div class="container">
+      <div class="row">
+         <div class="col-sm-12">
+            <h1 class="studies_taital">Search Results</h1>
+            {% if results %}
+            <p>Here are the doors that match your search:</p>
+         </div>
+      </div>
+      
+      <div class="studies_section_2">  
+         <div class="row">
+            {% for result in results %}
+               <div class="col-md-4">
+                  <div class="hover01 column">
+                     <!-- Use the Django URL tag to link to the door's info page -->
+                     <a href="{% url 'current:page' result.pk %}">
+                        <figure>
+                           <img src="{{ result.image.url }}" alt="{{ result.title }}" style="width: 150px; height: 200px;">
+                        </figure>
+                     </a>
+                  </div>
+                  <div class="studies_box">
+                     <h3 class="introduction_text">{{ result.title }}</h3>
+                  </div>
+               </div>
+            {% endfor %}
+         </div>
+      </div>
+      {% else %}
+         <p>No doors match your search criteria. Please try again with different measurements.</p>
+      {% endif %}
+      
+      <a href="{% url 'current:keep_frame' %}">
+         <button class="readmore_btn">Try again</button>
+      </a>
+   </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    {{ doors.title }}
+{% endblock %}
+
+{% block content %}
+    <section>
+        <div class="studies_section layout_padding">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-6" style="background-color:rgb(223, 226, 228)">
+                     <div class="about_img"><img src="{{ doors.image.url }}" style="width: auto; height: 500px; float: right; padding: 82px 70px 0px 0px"></div>
+                  </div>
+                  <div class="col-md-6" style="background-color: #ece6d2">
+                     <div class="about_text_main">
+                        <h1 class="about_taital">{{ doors.title }}</h1>
+                        <div class="about_text">
+                            <p><span style="font-weight:bold;">Height:</span> {{ doors.height }}</p> 
+                            <p><span style="font-weight:bold;">Width:</span> {{ doors.width }}</p>
+                            <p><span style="font-weight:bold;">Position of top hinge:</span> {{ doors.pos_hinge_top }}</p>
+                            <p><span style="font-weight:bold;">Position of middle hinge:</span> {{ doors.pos_hinge_middle }}</p>
+                            <p><span style="font-weight:bold;">Position of bottom hinge:</span> {{ doors.pos_hinge_bottom }}</p>
+                            <p><span style="font-weight:bold;">Position of lock:</span> {{ doors.pos_lock }}</p>
+                            <p><span style="font-weight:bold;">Material:</span> {{ doors.material }}</p>
+                            <p><span style="font-weight:bold;">Number of wings:</span> {{ doors.wings }}</p>
+                            <p><span style="font-weight:bold;">Opening mechanism:</span> {{ doors.mechanism }}</p>
+                            <p><span style="font-weight:bold;">Details:</span> {{ doors.details }}</p>
+                            <p><span style="font-weight:bold;">Uploaded:</span> {{ doors.date }}</p>
+                            <p><span style="font-weight:bold;">Contact seller:</span> {{ marker.contact }}</p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+    </section>
+{% endblock %}

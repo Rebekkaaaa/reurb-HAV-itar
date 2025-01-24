@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map with Markers</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <!-- bootstrap css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <!-- Responsive-->
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+    <!-- fevicon -->
+    <link rel="icon" href="{% static 'images/fevicon.png' %}" type="image/gif" />
+    <!-- font css -->
+    <link href="https://fonts.googleapis.com/css2?family=Sen:wght@400;700;800&display=swap" rel="stylesheet">
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/jquery.mCustomScrollbar.min.css' %}">
+    <!-- Tweaks for older IEs-->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <style>
+        #map { height: 550px; margin: 20px 20px}
+        .marker-icon {
+            width: 30px;
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+      <div class="header_section">
+               <div class="navbar-fluid">
+                  <nav class="navbar navbar-expand-lg navbar-light">
+                     <a class="navbar-brand"href="/">
+                        <img class= "logo_img" src="{% static 'images/logo-white.png' %}"></a>
+                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                     <span class="navbar-toggler-icon"></span>
+                     </button>
+                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+                           <li class="nav-item active">
+                              <a class="nav-link" href="/">Home</a>
+                           </li>
+                           <li class="nav-item">
+                              <a class="nav-link" href="{% url 'historic:map' %}">Historic map</a>
+                           </li>
+                           <li class="nav-item">
+                              <a class="nav-link" href="{% url 'current:list' %}">Doors for sale</a>
+                           </li>
+                           <li class="nav-item">
+                              <a class="nav-link" href="{% url 'current:new-door' %}">Upload door for Sale</a>
+                           </li>
+                           <li class="nav-item">
+                              <a class="nav-link" href="{% url 'current:my_doors' %}">My Doors</a>
+                           </li>
+   
+                        </ul>
+                        {% if user.is_authenticated %}
+                        <form class="form-inline my-2 my-lg-0">
+                           <div class="login_bt">
+                              <ul>
+                                 <li><a href="{% url 'users:logout' %}"><span class="user_icon"><i class="fa fa-user" aria-hidden="true"></i></span>Logout</a></li>
+                              </ul>
+                           </div>
+                        {% else %}
+                        <form class="form-inline my-2 my-lg-0">
+                           <div class="login_bt">
+                              <ul>
+                                 <li><a href="{% url 'users:login' %}"><span class="user_icon"><i class="fa fa-user" aria-hidden="true"></i></span>Login</a></li>
+                                 <li><a href="{% url 'users:register' %}"><span class="user_icon"><i class="fa fa-user" aria-hidden="true"></i></span>Register</a></li>
+                              </ul>
+                           </div>
+                        </form>
+                        {% endif %}
+                     </div>
+                  </nav>
+               </div>
+            </div>
+    <div class="header_section">
+        
+    
+    {% block content %}
+    
+      
+               
+                  <div class="row">
+                     <div class="col-md-12">
+                        <div class="newsletter_section"> 
+                           <h1 class="newsletter_taital">Historic views</h1>
+                           <p class="banner_text">Click on a marker to find out, what the house might have looked like originally. If you have historic information and images of other houses, you can also add a new marker. </p>
+                        </div>
+                     </div>
+                  </div>
+               
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+    // Ensure markers data is available as JSON
+    var markers = {{ markers|safe }};
+    
+    // Initialize the map
+    var map = L.map('map').setView([23.129046, -82.365061], 17); // Set initial view coordinates and zoom level
+    
+    // Add a Mapbox Tile Layer
+    L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/light-v11/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+        id: "mapbox/streets-v11", // Use the desired Mapbox style (see below for options)
+        accessToken: "pk.eyJ1IjoicmViZWtrYWEiLCJhIjoiY202NmN0MHpjMDA2ODJxcXBheXY1ZDlrYSJ9.lRsG2DbtX-FQ4MylMDOjnw",
+        tileSize: 512, // Required for Mapbox tiles
+        zoomOffset: -1, // Required for Mapbox tiles
+        attribution: '© <a href="https://www.mapbox.com/">Mapbox</a> contributors'
+    }).addTo(map);
+
+    
+    // Loop through each marker and add it to the map
+    markers.forEach(function(marker) {
+         // Use the default Leaflet marker icon
+        var markerInstance = L.marker([marker.fields.latitude, marker.fields.longitude]).addTo(map);
+        var icon = L.icon({
+            iconUrl: marker.fields.image_url, // Ensure your model has an image field for markers
+            iconSize: [30, 30], // Size of the marker image
+            className: 'marker-icon'
+        });
+    
+    
+        // Bind click event to redirect to house info page
+        markerInstance.on('click', function() {
+            window.location.href = 'info/' + marker.pk; // Redirect to info page with marker ID
+        });
+    });
+    </script>
+
+    <div class="read_bt"><a href="{% url 'historic:marker' %}">Add new marker</a></div>
+    {% endblock %}
+</body>
+</html>

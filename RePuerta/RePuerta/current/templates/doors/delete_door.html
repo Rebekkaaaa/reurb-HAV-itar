@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+{% block title %}Delete Door{% endblock %}
+{% comment %} {% block content %}
+<h1>Are you sure you want to delete "{{ door.title }}"?</h1>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Yes, delete</button>
+</form>
+<a href="{% url 'current:my_doors' %}">Cancel</a>
+{% endblock %} {% endcomment %}
+
+
+{% block content %}
+        <div class="studies_section layout_padding">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-4">
+                    <h1 class="about_taital">Are you sure you want to delete "{{ door.title }}"?</h1>
+                    <div class="about_text_main">
+                        <form method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="tomap_bt active">Yes, delete</button>
+                        </form>
+                        <div class="readmore_btn active"><a href="{% url 'current:my_doors' %}">Cancel</a></div>
+                     </div>
+                 </div>
+               </div>
+            </div>
+         </div>
+    {% endblock %}

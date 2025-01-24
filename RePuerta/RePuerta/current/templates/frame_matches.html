@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Door Matches
+{% endblock %}
+
+{% block content %}
+<section>
+    <h1>Search Results</h1>
+
+    {% if results %}
+        <p>Here are the doors that match your search:</p>
+        <div class="door-results">
+            <table border="1">
+                <tbody>
+                    {% for result in results %}
+                        <tr>
+                            <td>
+                                <!-- Image as a clickable link -->
+                                <a href="{% url 'current:page' %}">
+                                    <img src="{{ result.image.url }}" alt="{{ result.name }}" style="width: 150px; height: auto;">
+                                </a>
+                            </td>
+                            <td>{{ result.height }}</td>
+                            <td>{{ result.width }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p>No doors match your search criteria. Please try again with different measurements.</p>
+    {% endif %}
+    <a href={% url 'current:new_frame' %}>
+        <button>Try again</button>
+</section>
+{% endblock %}

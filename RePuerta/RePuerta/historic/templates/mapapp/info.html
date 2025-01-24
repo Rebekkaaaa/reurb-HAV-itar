@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Information</title>
+    {% block title %}
+    {{ marker.name }}
+    {% endblock %}
+</head>
+<body>
+    {% block content %}
+    <!-- about section start -->
+    <div class="studies_section layout_padding">
+        <div class="container">
+           <div class="row">
+              <div class="col-md-6">
+                 <div class="about_img"><img src="{{ marker.image.url }}"></div>
+              </div>
+              <div class="col-md-6">
+                 <div class="about_text_main">
+                    <h1 class="about_taital">{{ marker.name }}</h1>
+                    <div class="about_text">
+                        <p><span style="font-weight:bold;">Latitude:</span> {{ marker.latitude }}</p>
+                        <p><span style="font-weight:bold;">Longitude:</span> {{ marker.longitude }}</p>
+                        <p><span style="font-weight:bold;">Description:</span> </p>
+                        <p>{{ marker.description }}</p>
+                    </div>
+                    <div class="back_btn"><a href="{% url 'historic:map' %}">Back to map</a></div>
+                    <div class="find_btn"><a href="{% url 'current:new_frame' %}">Find door</a></div>
+                 </div>
+              </div>
+           </div>
+        </div>
+     </div>
+     <!-- about section end -->
+    {% endblock %}
+</body>
+</html>
+

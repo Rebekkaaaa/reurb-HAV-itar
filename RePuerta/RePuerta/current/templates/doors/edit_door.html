@@ -1,0 +1,41 @@
+{% extends 'layout.html' %}
+
+<!DOCTYPE html>
+{% load static %}
+
+{% block title %}
+Edit Door
+{% endblock %}
+
+{% block content %}
+<section>   
+    <div class="contact_section layout_padding">
+        <div class="container">
+           <div class="row">
+              <div class="col-md-12">
+                 <h1 class="contact_taital">Edit</h1>
+              </div>
+           </div>
+           <div class="contact_section_2">
+              <div class="row">
+                 <div class="col-md-9">
+                    <div class=".cta-form"> 
+                           </form> {% comment %} without this line, the form doesn't work {% endcomment %}                         
+                           <form class="form" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button class="readmore_btn">Save changes</button>
+                            <button class="readmore_btn" href="{% url 'current:my_doors' %}">Cancel</button>
+                           </form>
+                    </div>
+                 </div>
+                 <div class="col-md-3">
+                     <div class="banner_img"><img src="{% static 'images/pikto-current.png' %}" style="max-width: 300px; height: auto"></div>
+                 </div>
+              </div>
+           </div>
+        </div>
+     </div>
+     <!-- contact section end -->
+</section>
+{% endblock %}

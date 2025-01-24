@@ -1,0 +1,52 @@
+{% extends 'layout.html' %}
+
+
+<!DOCTYPE html>
+{% load static %}
+{% block title %}
+    Replace with new frame
+{% endblock %}
+
+{% block content %}
+{% comment %} <section>
+    <h1>Please enter the measurements of your opening</h1>
+
+    <!-- Form for entering measurements -->
+    <form class="form-with-validation" action="{% url 'current:new_frame_view' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="form-submit">Submit</button>
+    </form>
+
+</section> {% endcomment %}
+
+<section>   
+    <div class="contact_section layout_padding">
+        <div class="container">
+           <div class="row">
+              <div class="col-md-12">
+                 <h1 class="contact_taital">Please enter the measurements of your opening.</h1>
+              </div>
+           </div>
+           <div class="contact_section_2">
+              <div class="row">
+                 <div class="col-md-8">
+                    <div class=".cta-form"> 
+                        </form> {% comment %} without this line, the form doesn't work {% endcomment %}
+                        <form class="form-with-validation" action="{% url 'current:new_frame_view' %}" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button class="readmore_btn">Submit</button>
+                        </form>
+                    </div>
+                 </div>
+                 <div class="col-md-4">
+                     <div class="about_img"><img src="{% static 'images/frame.png' %}" style=width: 50px></div>
+                 </div>
+              </div>
+           </div>
+        </div>
+     </div>
+     <!-- contact section end -->
+</section>
+{% endblock %}

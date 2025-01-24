@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+
+<!DOCTYPE html>
+{% load static %}
+
+{% block title %}
+    Register a New User
+{% endblock %}
+
+{% block content %}
+   
+    <section>   
+        <div class="contact_section layout_padding">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-12">
+                     <h1 class="contact_taital">Register</h1>
+                  </div>
+               </div>
+               <div class="contact_section_2">
+                  <div class="row">
+                     <div class="col-md-12">
+                        <div class=".cta-form">                          
+                              <form class="form" action="{% url 'users:register' %}" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <button class="readmore_btn">Submit</button>
+                              </form>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- contact section end -->
+    </section>
+{% endblock %}
