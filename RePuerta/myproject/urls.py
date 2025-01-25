@@ -29,11 +29,11 @@ urlpatterns = [
             {'document_root': settings.STATIC_ROOT}),
     path('admin/', admin.site.urls),
     path('', views.homepage, name='home'),
-    # path('about/', views.about),
     path('users/', include('users.urls')),
     path('repare/', views.repare),
-    path('replace/', views.replace),
+    path('replace/', views.replace, name='replace'),
     path('replace_current/', include('current.urls')),
     path('replace_historic/', include('historic.urls')),
     path('', map_view, name='map'),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

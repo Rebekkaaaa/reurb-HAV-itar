@@ -8,17 +8,7 @@
 {% endblock %}
 
 {% block content %}
-{% comment %} <section>
-    <h1>Please enter the measurements of your opening</h1>
 
-    <!-- Form for entering measurements -->
-    <form class="form-with-validation" action="{% url 'current:new_frame_view' %}" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button class="form-submit">Submit</button>
-    </form>
-
-</section> {% endcomment %}
 
 <section>   
     <div class="contact_section layout_padding">
@@ -47,6 +37,5 @@
            </div>
         </div>
      </div>
-     <!-- contact section end -->
 </section>
 {% endblock %}

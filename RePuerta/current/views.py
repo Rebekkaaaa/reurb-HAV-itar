@@ -1,12 +1,11 @@
-# from .forms import SizeSearchForm
 from django.shortcuts import render, redirect, get_object_or_404
-
 from .models import Door
 from . import forms
 from .forms import KeepFrameForm, NewFrameForm, AddNewDoor
-# from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from historic.models import Marker
+from historic.forms import AddMarker
 
 # Create your views here.
 
@@ -54,7 +53,6 @@ def search_view(request):
             pos_hinge_bottom = form.cleaned_data['pos_hinge_bottom']
             pos_lock = form.cleaned_data['pos_lock']
             wings = form.cleaned_data['wings']
-            # mechanism = form.cleaned_data['mechanism']
 
             # Check if a door with similar data already exists
             results = Door.objects.filter(
@@ -65,7 +63,6 @@ def search_view(request):
                 Q(pos_hinge_bottom__gte=pos_hinge_bottom, pos_hinge_bottom__lte=pos_hinge_bottom + 5) &
                 Q(pos_lock__gte=pos_lock, pos_lock__lte=pos_lock + 5) &
                 Q(wings=wings)
-                # Q(mechanism=mechanism)
             )
 
             if results:
@@ -77,7 +74,7 @@ def search_view(request):
     else:
         form = KeepFrameForm()
 
-    return render(request, 'keep_frame.html', {'form': form, 'results': results})
+    return render(request, 'keep_frame.html', {'form': form, })
 
 
 def new_frame_view(request):
@@ -90,14 +87,12 @@ def new_frame_view(request):
             opening_height = form.cleaned_data['height']
             opening_width = form.cleaned_data['width']
             wings = form.cleaned_data['wings']
-            # mechanism = form.cleaned_data['mechanism']
 
             # Check if a door with similar data already exists
             results = Door.objects.filter(
                 Q(height__gte=opening_height, height__lte=opening_height + 5) &
                 Q(width__gte=opening_width, width__lte=opening_width) &
                 Q(wings=wings)
-                # Q(mechanism=mechanism)
             )
 
             if results:
@@ -117,15 +112,9 @@ def doors_list(request):
     return render(request, 'doors/doors_list.html', {'doors': door})
 
 
-# def doors_page(request):
-#     door = Door.objects.get()
-#     return render(request, 'doors/doors_page.html', {'doors': door})
-
 def doors_page(request, pk):
-    # Get door object by primary key
     door = get_object_or_404(Door, pk=pk)
 
-    # Render the info page template with door details
     return render(request, 'doors/doors_page.html', {'doors': door})
 
 
@@ -143,11 +132,17 @@ def door_new(request):
     return render(request, 'doors/add_door.html', {'form': form})
 
 
-@login_required(login_url="/users/login/")
-def my_doors(request):
-    # Filter doors by the logged-in user
-    door = Door.objects.filter(user=request.user)
-    return render(request, 'doors/my_doors.html', {'doors': door})
+@login_required
+def my_uploads(request):
+    doors = Door.objects.filter(user=request.user)
+    markers = Marker.objects.filter(author=request.user)
+
+    context = {
+        'doors': doors,
+        'markers': markers,
+    }
+
+    return render(request, 'my_uploads.html', context)
 
 
 @login_required(login_url="/users/login/")
@@ -159,7 +154,7 @@ def edit_door(request, pk):
         if form.is_valid():
             form.save()
             # Redirect to the user's doors list
-            return redirect('current:my_doors')
+            return redirect('current:my_uploads')
     else:
         form = AddNewDoor(instance=door)
     return render(request, 'doors/edit_door.html', {'form': form})
@@ -172,5 +167,31 @@ def delete_door(request, pk):
     if request.method == 'POST':
         door.delete()
         # Redirect to the user's doors list
-        return redirect('current:my_doors')
+        return redirect('current:my_uploads')
     return render(request, 'doors/delete_door.html', {'door': door})
+
+
+@login_required(login_url="/users/login/")
+def edit_marker(request, pk):
+    # Ensure marker belongs to the user
+    marker = get_object_or_404(Marker, pk=pk, author=request.user)
+    if request.method == 'POST':
+        form = AddMarker(request.POST, request.FILES, instance=marker)
+        if form.is_valid():
+            form.save()
+            # Redirect to the user's markers list
+            return redirect('current:my_uploads')
+    else:
+        form = AddMarker(instance=marker)
+    return render(request, 'doors/edit_marker.html', {'form': form})
+
+
+@login_required(login_url="/users/login/")
+def delete_marker(request, pk):
+    # Ensure marker belongs to the user
+    marker = get_object_or_404(Marker, pk=pk, author=request.user)
+    if request.method == 'POST':
+        marker.delete()
+        # Redirect to the user's markers list
+        return redirect('current:my_uploads')
+    return render(request, 'doors/delete_marker.html', {'marker': marker})

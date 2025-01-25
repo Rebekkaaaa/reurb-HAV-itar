@@ -2,6 +2,7 @@
 {% load static %}
 <html lang="en">
 <head>
+   <!-- head and navbar added separately so they don't mess up the map -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Map with Markers</title>
@@ -45,13 +46,16 @@
                               <a class="nav-link" href="{% url 'historic:map' %}">Historic map</a>
                            </li>
                            <li class="nav-item">
+                              <a class="nav-link" href="{% url 'replace' %}">Find door</a>
+                           </li>
+                           <li class="nav-item">
                               <a class="nav-link" href="{% url 'current:list' %}">Doors for sale</a>
                            </li>
                            <li class="nav-item">
-                              <a class="nav-link" href="{% url 'current:new-door' %}">Upload door for Sale</a>
+                              <a class="nav-link" href="{% url 'current:new-door' %}">Sell door</a>
                            </li>
                            <li class="nav-item">
-                              <a class="nav-link" href="{% url 'current:my_doors' %}">My Doors</a>
+                              <a class="nav-link" href="{% url 'current:my_uploads' %}">My Uploads</a>
                            </li>
    
                         </ul>
@@ -86,7 +90,7 @@
                   <div class="row">
                      <div class="col-md-12">
                         <div class="newsletter_section"> 
-                           <h1 class="newsletter_taital">Historic views</h1>
+                           <h1 class="banner_taital">Historic views</h1>
                            <p class="banner_text">Click on a marker to find out, what the house might have looked like originally. If you have historic information and images of other houses, you can also add a new marker. </p>
                         </div>
                      </div>
